@@ -16,6 +16,7 @@ bool isOnMatrix(int i, int j, int height, int width);
 void copyImage(int height, int width, RGBTRIPLE image[height][width], RGBTRIPLE tmp_image[height][width]);
 int  roundPixel(double number);
 double combineKernels(int Gx, int Gy);
+double makeSepia(char flag, BYTE red, BYTE green, BYTE blue);
 
 // Convert image to grayscale
 void grayscale(int height, int width, RGBTRIPLE image[height][width])
@@ -216,6 +217,27 @@ void edges(int height, int width, RGBTRIPLE image[height][width])
     return;
 }
 
+void sepia(int height, int width, RGBTRIPLE image[height][width])
+{
+    // Creates a temporary image
+    RGBTRIPLE tmp_image[height][width];
+    
+    for (int i = 0; i < height; i++)
+    {
+        for (int j = 0; j < width; j++)
+        {
+            // Changes the image values into the tmp_image to get a sepia style to all RGB colors
+            tmp_image[i][j].rgbtBlue  = roundPixel(makeSepia('b', image[i][j].rgbtRed, image[i][j].rgbtGreen, image[i][j].rgbtBlue));
+            tmp_image[i][j].rgbtGreen = roundPixel(makeSepia('g', image[i][j].rgbtRed, image[i][j].rgbtGreen, image[i][j].rgbtBlue));
+            tmp_image[i][j].rgbtRed   = roundPixel(makeSepia('r', image[i][j].rgbtRed, image[i][j].rgbtGreen, image[i][j].rgbtBlue));
+        }
+    }
+    
+    copyImage(height, width, image, tmp_image);
+    
+    return;
+}
+
 void clear(sumRGB *average)
 {
     average->sumBlue = 0;
@@ -253,6 +275,8 @@ int roundPixel(double number)
 {
     if (number > 255)
         return 255;
+    else if (number < 0)
+        return 0;
     else
         return round((double)number);
 }
@@ -263,4 +287,21 @@ double combineKernels(int Gx, int Gy)
     int powGy = pow(Gy, 2);
 
     return sqrt(powGx + powGy);
+}
+
+double makeSepia(char flag, BYTE red, BYTE green, BYTE blue)
+{
+    if (flag == 'r')
+    {
+        return .393 * red + .769 * green + .189 * blue;
+    }
+    else if (flag == 'g')
+    {
+        return .349 * red + .686 * green + .168 * blue;
+    }
+    else if (flag == 'b')
+    {
+        return .272 * red + .534 * green + .131 * blue;
+    }
+    else return -1;
 }
