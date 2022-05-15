@@ -47,4 +47,18 @@ In this repository you'll find four directories:
 
 As their name suggest, they have inside the images with the corresponding filters as a sample of how the effects look like.
 
+Here are some exemples
+
+![Original image](images/courtyard.bmp)
+
+![Exemple of a blurred image](images/blur-images/blur_courtyard.bmp)
+
+![Exemple of an edged image](images/edge-images/edge_courtyard.bmp)
+
+![Exemple of a grayscaled image](images/grayscale-images/grayscale_courtyard.bmp)
+
+![Exemple of a reflected image](images/reflect-images/reflect_courtyard.bmp)
+
+If you wish to see all the exemples, please click on the images folder and select the directory or image you wold like to see and than click on \"view raw".
+
 I hope you enjoyed the project as much as I did.
